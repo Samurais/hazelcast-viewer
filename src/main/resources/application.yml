@@ -16,6 +16,8 @@ logging:
 hazelcast:
   server:
     addresses: localhost:5701
+    group:
+    pass:
   client:
     instance:
       name: remote-viewer

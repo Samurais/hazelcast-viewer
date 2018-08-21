@@ -3,6 +3,7 @@ package io.danpalmer101.hazelcastviewer.config;
 import com.hazelcast.client.HazelcastClient;
 import com.hazelcast.client.config.ClientConfig;
 import com.hazelcast.client.config.ClientNetworkConfig;
+import com.hazelcast.config.GroupConfig;
 import com.hazelcast.core.HazelcastInstance;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -27,6 +28,13 @@ public class HazelcastConfiguration {
     @Value("${hazelcast.server.addresses}")
     private String hazelcastAddresses;
 
+
+    @Value("${hazelcast.server.group}")
+    private String group;
+
+    @Value("${hazelcast.server.pass}")
+    private String password;
+
     /**
      * Programatically create a Hazelcast instance with client config
      * @return a Hazelcast instance
@@ -39,6 +47,7 @@ public class HazelcastConfiguration {
 
         ClientConfig clientConfig = new ClientConfig();
         clientConfig.setInstanceName(hazelcastClientInstance);
+        clientConfig.setGroupConfig(new GroupConfig(group, password));
         ClientNetworkConfig networkConfig = clientConfig.getNetworkConfig();
 
         networkConfig.setAddresses(hazelcastAddressList);
